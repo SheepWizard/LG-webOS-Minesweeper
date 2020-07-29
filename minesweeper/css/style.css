@@ -1,0 +1,104 @@
+.container{
+    width: 328px;
+    height: 412px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(189, 189, 189);
+}
+
+.selector{
+    border: solid thin red;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    display: none;
+}
+
+.cell{
+    width: 32px;
+    height: 32px;
+    float: left;
+    background-image: url("../images/cell_closed.png");
+    background-size: cover;
+}
+
+.bordertl{
+    width: 20px;
+    height: 20px;
+    float: left;
+    background-image: url("../images/board_topleft.png");
+    background-size: cover;
+}
+
+.bordertr{
+    width: 20px;
+    height: 20px;
+    float: left;
+    background-image: url("../images/board_topright.png");
+    background-size: cover;
+}
+
+.borderTop{
+    width: 32px;
+    height: 20px;
+    float: left;
+    background-image: url("../images/board_top.png");
+    background-size: cover;
+}
+
+.borderLong{
+    width: 20px;
+    height: 64px;
+    float: left;
+    background-image: url("../images/board_side.png");
+    background-size: cover;
+}
+
+.topArea{
+    height: 64px;
+    float: left;
+    background-color: rgb(189, 189, 189);
+}
+
+.jointl{
+    width: 20px;
+    height: 20px;
+    float: left;
+    background-image: url("../images/joint_left.png");
+    background-size: cover;
+}
+
+.jointr{
+    width: 20px;
+    height: 20px;
+    float: left;
+    background-image: url("../images/joint_right.png");
+    background-size: cover;
+}
+
+.side{
+    width: 20px;
+    height: 32px;
+    float: left;
+    background-image: url("../images/board_side.png");
+    background-size: cover;
+}
+
+.borderbl{
+    width: 20px;
+    height: 20px;
+    float: left;
+    background-image: url("../images/board_bottomleft.png");
+    background-size: cover;
+}
+
+.borderbr{
+    width: 20px;
+    height: 20px;
+    float: left;
+    background-image: url("../images/board_bottomright.png");
+    background-size: cover;
+}
+
