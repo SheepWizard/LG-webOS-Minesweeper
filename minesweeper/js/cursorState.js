@@ -1,6 +1,6 @@
-let cursorSate = 0;
+let cursorState = 0;
 
 function cursorVisibilityChange(event) {
-    cursorSate = event.detail.visibility;
+    cursorState = event.detail.visibility;
 }
 document.addEventListener('cursorStateChange', cursorVisibilityChange, false);

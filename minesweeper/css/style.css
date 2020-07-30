@@ -9,6 +9,7 @@
 }
 
 .selector{
+    pointer-events: none;
     border: solid thin red;
     position: absolute;
     width: 32px;
@@ -87,7 +88,7 @@
 }
 
 .smileSpace{
-    height: 46px;
+    height: 64px;
     position: relative;
     float:left;
     background-color: rgb(189, 189, 189);
@@ -103,7 +104,6 @@
     background-image: url("../images/smiley_play.png");
     background-size: cover;
 }
-
 
 .jointl{
     width: 20px;
@@ -147,11 +147,12 @@
 
 .sideMenu{
     top:50%;
+    left:0px;
     transform: translateY(-50%);
     position: relative;
-    height:50%;
+    height:55%;
     float:left;
-    width:300px;
+    width:360px;
     background-color: #E7E7E7;
     border-top:  solid thick #222222;
     border-right:  solid thick #222222;
@@ -159,6 +160,86 @@
     border-radius: 5px;
 }
 
+.settingsButton{
+    background-color: #222222;
+    color: black;
+    height: 30px;
+    border: 2px solid #EA6767;
+    margin: 5px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.settingsButton:focus{
+    outline: none;
+}
+
+.logo{
+    width:100%;
+    padding-top: 20px;
+}
+
+.buttonContainer{
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.bottomBar{
+    left:50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 360px;
+    height: 40px;
+    background-color: #222222;
+    position: fixed;
+    border-top:  solid thick #222222;
+    border-right:  solid thick #222222;
+    border-left:  solid thick #222222;
+    border-radius: 5px;
+}
+
+.bottomText{
+    text-align: left;
+    display: inline;
+    margin: 5px;
+    text-decoration: none;
+}
+
+.bottomButton{
+    width: 170px;
+}
+
+.bottomImage{
+    float:left;
+    top:50%;
+
+    margin-right:0.5em; 
+    width: 20px; 
+    height: 20px;
+}
+
+
+
+
+
+
+
+
+h2{
+    text-decoration: underline overline;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+    font-size: 30px;
+}
+h3{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+    text-decoration: underline;
+    font-size: 25px;
+}
 html, body{
     height: 100%;
     padding: 0px;

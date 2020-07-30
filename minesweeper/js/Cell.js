@@ -1,22 +1,7 @@
 "use strict";
 
 
-const cellImages = [
-    "url(images/cell_open.png)",
-    "url(images/cell_1.png)",
-    "url(images/cell_2.png)",
-    "url(images/cell_3.png)",
-    "url(images/cell_4.png)",
-    "url(images/cell_5.png)",
-    "url(images/cell_6.png)",
-    "url(images/cell_7.png)",
-    "url(images/cell_8.png)",
-    "url(images/cell_closed.png)",
-    "url(images/cell_mine.png)",
-    "url(images/cell_minehit.png)",
-    "url(images/cell_wrongflag.png)",
-    "url(images/cell_flag.png)",
-]
+
 
 class Cell{
     constructor(div, x, y){

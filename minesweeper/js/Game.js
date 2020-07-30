@@ -1,34 +1,5 @@
 "use strict";
 
-//Magic remote key codes
-const keyCodes = {
-    left:   0x25,
-    up:     0x26,
-    right:  0x27,
-    down:   0x28,
-    ok:     0x0D,
-    back:   0x1CD,
-    red:    0x193,
-    green:  0x194,
-    yellow: 0x195,
-    blue:   0x196,
-};
-
-const numberImages = [
-    "url(images/number_0.png)",
-    "url(images/number_1.png)",
-    "url(images/number_2.png)",
-    "url(images/number_3.png)",
-    "url(images/number_4.png)",
-    "url(images/number_5.png)",
-    "url(images/number_6.png)",
-    "url(images/number_7.png)",
-    "url(images/number_8.png)",
-    "url(images/number_9.png)",
-    "url(images/number_blank.png)",
-];
-
-
 
 class Game{
     constructor(x,y,m){
@@ -46,6 +17,7 @@ class Game{
         this.time           = 0;
         this.flagDisplay    = [];
         this.timeDisplay    = [];
+        this.keysDisabled   = false;
 
         this._onCellClick       = this._onCellClick.bind(this);
         this._keyPress          = this._keyPress.bind(this);
@@ -61,6 +33,9 @@ class Game{
         this.placeMines();
         this.placeNumbers();
         this._setDotDisplay(this.flagDisplay, this.mines);
+        if (!cursorState){
+            this._updateSelector(true);
+        }
     }
 
     stop(){
@@ -111,6 +86,19 @@ class Game{
         }
     }
 
+    changeMode(){
+        this.mode = this.mode === 0 ? 1 : 0;
+        if (this.mode === 0) {
+            document.getElementById("modeText").innerHTML = "Mode: Mine";
+        } else {
+            document.getElementById("modeText").innerHTML = "Mode: Flag";
+        }
+    }
+
+    _disableKeys(bool){
+        this.keysDisabled = bool;
+    }
+
     /**
      * Called when a cell is clicked.
      * @param {MouseEvent} event 
@@ -136,7 +124,7 @@ class Game{
         }
 
         //Update selector positon when using magic mouse to when moving back to button you are in last clicked place
-        if(cursorSate === 0){
+        if (cursorState){
             this.selectedCell = this._cellOffset(cell.x, cell.y);
         }
         
@@ -201,7 +189,7 @@ class Game{
                     cell.flag(true);
                 }
             });
-            
+            this.resetButton.style.backgroundImage = smileImages.win;
             this._setDotDisplay(this.flagDisplay, 0);
         }else{
             for(let i = 0; i<this.cells.length; i++){
@@ -212,6 +200,7 @@ class Game{
                     this.cells[i].open(-1,-1);
                 }
             }
+            this.resetButton.style.backgroundImage = smileImages.dead;
         }
 
         //move selector over smile
@@ -282,11 +271,13 @@ class Game{
             elm.reset();
         });
 
+        this.resetButton.style.backgroundImage = smileImages.smile;
         this.placeMines();
         this.placeNumbers();
         this._setDotDisplay(this.flagDisplay, this.mines);
         this._setDotDisplay(this.timeDisplay, 0);
-        if(cursorSate){
+        if (!cursorState){
+            // printT("reset");
             this._updateSelector(true);
         }    
     }
@@ -373,16 +364,19 @@ class Game{
      * @param {KeyEvent} event 
      */
     _keyPress(event){
+
+        if (this.keysDisabled){
+            return;
+        }
         
-        if(cursorSate === 1){
+        if (this.gameOver) {
+            if (event.keyCode === keyCodes.ok) {
+                this._reset();
+            }
             return;
         }
 
-        if (this.gameOver){
-            if (event.keyCode === keyCodes.ok){
-                this._reset();
-            }
-                
+        if (cursorState){
             return;
         }
 
@@ -425,7 +419,7 @@ class Game{
                 this._updateSelector(true);
                 break;
             case keyCodes.red:
-                this.mode = this.mode === 0 ? 1 : 0;
+                this.changeMode();
                 break;
             default:
                 break;
