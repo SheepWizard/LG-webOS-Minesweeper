@@ -37,17 +37,27 @@ function setTheme(){
 
 
 function newGame(settings) {
-    currentSettings = settings;
-    buildBoard(settings.width, settings.height, settings.x, settings.y);
-    applyScale();
-    setTheme();
-    if(game){
-        game.stop();
-    }
-    game = new Game(settings.x, settings.y, settings.mines);
-    if (settingsMenu.isOpen()){
-        game._disableKeys(true);
-    }
+    const loadingText = document.getElementById("loading");
+    loadingText.innerHTML = "Loading...";
+
+        
+    setTimeout(() => {
+        currentSettings = settings;
+        buildBoard(settings.width, settings.height, settings.x, settings.y);
+        applyScale();
+        setTheme();
+        if (game) {
+            game.stop();
+        }
+        game = new Game(settings.x, settings.y, settings.mines);
+        if (settingsMenu.isOpen()) {
+            game._disableKeys(true);
+        }
+        loadingText.innerHTML = "";
+    }, 10);
+
+    
+    
 }
 
 /**
@@ -194,6 +204,24 @@ function applyScale(){
     }
 }
 
+function loadLocalSettings() {
+    const localStorage = window.localStorage;
+    let ls = localStorage.getItem(STORAGE_NAME);
+    if(!ls){
+        
+        localStorage.setItem(STORAGE_NAME, JSON.stringify({ scale: 1, theme: DARK_THEME}));
+    }else{
+        ls = JSON.parse(ls);
+        scale = ls.scale;
+        selectedTheme = ls.theme;
+    }
+}
+
+function saveSettings(){
+    localStorage.setItem(STORAGE_NAME, JSON.stringify({ scale: scale, theme: selectedTheme }));
+}
+
+
 /**
  * Settings menu controls
  */
@@ -224,8 +252,10 @@ function settings() {
     function openMenu(){
         if (open) {
             open = false;
-            sideMenu.style.left = "-365px";
-            game._disableKeys(false);
+            sideMenu.style.left = "-375px";
+            setTimeout(() => {
+                game._disableKeys(false); 
+            }, 100);  
         } else {
             open = true;
             sideMenu.style.left = "0px";
@@ -244,55 +274,73 @@ function settings() {
     }
     displaySelector();
 
-    easyButton.addEventListener("click", () =>{
+    easyButton.addEventListener("mousedown", () =>{
         newGame(EASY_SETTINGS);
         displaySelector();
     });
-    interButton.addEventListener("click", () =>{
+    interButton.addEventListener("mousedown", () =>{
         newGame(INTER_SETTINGS);
         displaySelector();
     });
-    expertButton.addEventListener("click", () =>{
+    expertButton.addEventListener("mousedown", () =>{
         newGame(EXPERT_SETTINGS);
         displaySelector();
     });
-    sizeSmall.addEventListener("click", () =>{
+    sizeSmall.addEventListener("mousedown", () =>{
         if(scale === 0.7) return;
         scale = 0.7;
+        saveSettings();
         newGame(currentSettings);
         displaySelector();
     });
-    sizeMedium.addEventListener("click", () =>{
+    sizeMedium.addEventListener("mousedown", () =>{
         if(scale === 1) return;
         scale = 1;
+        saveSettings();
         newGame(currentSettings);
         displaySelector();
     });
-    sizeLarge.addEventListener("click", () =>{
+    sizeLarge.addEventListener("mousedown", () =>{
         if(scale === 1.3) return
         scale = 1.3;
+        saveSettings();
         newGame(currentSettings);
         displaySelector();
     });
-    lightButton.addEventListener("click", () =>{
+    lightButton.addEventListener("mousedown", () =>{
         selectedTheme = LIGHT_THEME;
         setTheme();
+        saveSettings();
         displaySelector();
     });
-    darkButton.addEventListener("click", () =>{
+    darkButton.addEventListener("mousedown", () =>{
         selectedTheme = DARK_THEME;
         setTheme();
+        saveSettings();
         displaySelector();
     });
-    backButton.addEventListener("click", () =>{
+    backButton.addEventListener("mousedown", () =>{
         openMenu();
     });
-    modeButton.addEventListener("click", () =>{
+    modeButton.addEventListener("mousedown", () =>{
         game.changeMode();
     });
-    settingButton.addEventListener("click", () =>{
+    settingButton.addEventListener("mousedown", () =>{
         settingsMenu.open();
     });
+
+
+    function onMouseEnter(event) {
+        event.target.style.backgroundColor = "#EA6767";
+    }
+    function onMouseLeave(event) {
+        event.target.style.backgroundColor = selectedTheme.background;      
+    }
+
+    modeButton.addEventListener("mouseenter", onMouseEnter);
+    settingButton.addEventListener("mouseenter", onMouseEnter);
+    modeButton.addEventListener("mouseleave", onMouseLeave);
+    settingButton.addEventListener("mouseleave", onMouseLeave);
 
     /**
      * Menu hover action. Probably not the best solutions :P
@@ -310,6 +358,7 @@ function settings() {
                         buttonPositions[i][j].style.backgroundColor = selectedTheme.background;
                     }
                 }
+                displaySelector();
             });
         }
     }
@@ -360,7 +409,9 @@ function settings() {
         },
         click: function() {
             if (!open) return;
-            buttonPositions[menuSelector[0]][menuSelector[1]].click();
+            const clickEvent = document.createEvent('MouseEvents');
+            clickEvent.initEvent("mousedown", true, true);
+            buttonPositions[menuSelector[0]][menuSelector[1]].dispatchEvent(clickEvent);
         },
         open: function() {
             openMenu();
@@ -376,7 +427,10 @@ function settings() {
             }
         },
         enableSelector: function() {
-            displaySelector();
+            if(open){
+                displaySelector();
+            }
+            
         }
     }
 }
@@ -401,22 +455,30 @@ document.addEventListener("keydown", (event) =>{
         case keyCodes.blue:
             settingsMenu.open();
             break;
+        case keyCodes.red:
+            game.changeMode();
+            break;
         default:
             break;
     }
 });
 
-document.addEventListener('cursorStateChange', (event) =>{
-    if (event.detail.visibility) {
-        settingsMenu.disableSelector();
-    }else{
-        settingsMenu.enableSelector();
-    }
+// document.addEventListener('cursorStateChange', (event) =>{
+//     if (event.detail.visibility) {
+//         settingsMenu.disableSelector();
+//     }else{
+//         settingsMenu.enableSelector();
+//     }
 
-}, false);
+// }, false);
 
 window.addEventListener("load", () =>{
+    loadLocalSettings()
     settingsMenu = settings();
-    newGame(EXPERT_SETTINGS);
+    newGame(EASY_SETTINGS);
 });
+
+
+
+
 

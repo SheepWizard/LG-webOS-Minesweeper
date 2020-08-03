@@ -1,1 +1,1 @@
-ares-install --device emulator com.mydomain.minesweeper_0.0.1_all.ipk
+ares-install --device emulator com.mydomain.minesweeper_1.0.0_all.ipk

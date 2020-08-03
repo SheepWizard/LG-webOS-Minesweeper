@@ -34,7 +34,7 @@ class Game{
         this.placeNumbers();
         this._setDotDisplay(this.flagDisplay, this.mines);
         if (!cursorState){
-            this._updateSelector(true);
+            this._updateSelector(false);
         }
     }
 
@@ -402,6 +402,7 @@ class Game{
                 this._updateSelector(true);
                 break;
             case keyCodes.down:
+                console.log("down");
                 if(this.selectedCell + this.x > (this.x*this.y)-1 ){
                    
                     this.selectedCell = this.x - ((this.x * this.y) - this.selectedCell);
@@ -417,9 +418,6 @@ class Game{
                     this.selectedCell -= this.x;
                 }
                 this._updateSelector(true);
-                break;
-            case keyCodes.red:
-                this.changeMode();
                 break;
             default:
                 break;

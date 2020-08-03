@@ -17,15 +17,11 @@ class Cell{
 
         this._mouseDown     = this._mouseDown.bind(this);
         this._mouseUp       = this._mouseUp.bind(this);
-        this._mouseEnter    = this._mouseEnter.bind(this);
-        this._mouseLeave    = this._mouseLeave.bind(this);
         this._onContextMenu = this._onContextMenu.bind(this);
 
 
         div.addEventListener("mousedown", this._mouseDown);
         div.addEventListener("mouseup", this._mouseUp);
-        div.addEventListener("mouseenter", this._mouseEnter);
-        div.addEventListener("mouseleave", this._mouseLeave);
         div.addEventListener("contextmenu", this._onContextMenu);
     }
 
@@ -41,7 +37,7 @@ class Cell{
     open(x,y){
         this.isOpen = true;
         if(this.isMine){
-            if(this.x == x && this.y == y){
+            if(this.x === x && this.y === y){
                 this.div.style.backgroundImage = cellImages[11];
             }else{
                 this.div.style.backgroundImage = cellImages[10];
@@ -83,12 +79,6 @@ class Cell{
     _mouseUp(event){
         event.preventDefault();
         this.subscriber(this);
-    }
-
-    _mouseEnter(event){
-    }
-
-    _mouseLeave(event){
     }
 
     _onContextMenu(event){

@@ -147,12 +147,12 @@
 
 .sideMenu{
     top:50%;
-    left:0px;
+    left:-375px;
     transform: translateY(-50%);
     position: relative;
     height:55%;
     float:left;
-    width:360px;
+    width:370px;
     background-color: #E7E7E7;
     border-top:  solid thick #222222;
     border-right:  solid thick #222222;
@@ -191,8 +191,8 @@
     left:50%;
     transform: translateX(-50%);
     bottom: 0;
-    width: 360px;
-    height: 40px;
+    width: 410px;
+    height: 60px;
     background-color: #222222;
     position: fixed;
     border-top:  solid thick #222222;
@@ -209,16 +209,24 @@
 }
 
 .bottomButton{
-    width: 170px;
+    width: 195px;
+    height: 35px;
+
 }
 
 .bottomImage{
     float:left;
-    top:50%;
-
+    top:5px;
+    position: relative;
     margin-right:0.5em; 
     width: 20px; 
     height: 20px;
+}
+
+.loading{
+    position: absolute;
+    right: 40px;
+    bottom: 25px;
 }
 
 

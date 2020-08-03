@@ -1,3 +1,5 @@
+const STORAGE_NAME = "localSetting";
+
 
 const EASY_SETTINGS = {
     width: 328,
